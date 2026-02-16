@@ -288,7 +288,7 @@ describe("Bundle edit page", type: :system, js: true) do
 
       within "[aria-label='Product selector']" do
         within_cart_item "Test Product" do
-          expect(page).to have_text("Created")
+          expect(page).to have_text(2.days.ago.strftime("%b %-d, %Y"))
           expect(page).to have_link(href: test_product.long_url)
         end
       end
