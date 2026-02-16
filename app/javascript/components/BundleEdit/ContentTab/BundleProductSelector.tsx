@@ -41,23 +41,20 @@ export const BundleProductSelector = ({
       </CartItemMedia>
       <CartItemMain>
         <CartItemTitle>{bundleProduct.name}</CartItemTitle>
-        <a
-          href={bundleProduct.url}
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          className="text-sm underline"
-        >
+        <a href={bundleProduct.url} target="_blank" rel="noopener noreferrer nofollow" className="text-sm underline">
           {cleanUrl(bundleProduct.url)}
         </a>
         <CartItemFooter>
-          <span>{formatCreatedAt(bundleProduct.created_at)}</span>
-          {bundleProduct.variants && <span> · </span>}
-          {bundleProduct.variants && (
-            <span>
-              {bundleProduct.variants.list.length} {bundleProduct.variants.list.length === 1 ? "version" : "versions"}{" "}
-              available
-            </span>
-          )}
+          <span>
+            {formatCreatedAt(bundleProduct.created_at)}
+            {bundleProduct.variants ? (
+              <>
+                {" · "}
+                {bundleProduct.variants.list.length} {bundleProduct.variants.list.length === 1 ? "version" : "versions"}{" "}
+                available
+              </>
+            ) : null}
+          </span>
         </CartItemFooter>
       </CartItemMain>
       <CartItemEnd className="justify-center">
