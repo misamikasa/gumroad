@@ -40,6 +40,7 @@ export const BundleProductSelector = ({
         <Thumbnail url={bundleProduct.thumbnail_url} nativeType={bundleProduct.native_type} className="size-full" />
       </CartItemMedia>
       <CartItemMain>
+        <CartItemTitle>{bundleProduct.name}</CartItemTitle>
         <a
           href={bundleProduct.url}
           target="_blank"
@@ -48,9 +49,8 @@ export const BundleProductSelector = ({
         >
           {cleanUrl(bundleProduct.url)}
         </a>
-        <CartItemTitle>{bundleProduct.name}</CartItemTitle>
         <CartItemFooter>
-          <span>Created {formatCreatedAt(bundleProduct.created_at)}</span>
+          <span>{formatCreatedAt(bundleProduct.created_at)}</span>
           {bundleProduct.variants && <span> · </span>}
           {bundleProduct.variants && (
             <span>
