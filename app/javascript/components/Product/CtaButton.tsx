@@ -146,7 +146,7 @@ export const CtaButton = React.forwardRef<HTMLAnchorElement, Props>(
     };
 
     return (
-      <div className="contents max-lg:flex max-lg:items-center max-lg:gap-2">
+      <>
         <NavigationButton ref={ref} href={url.toString()} color="accent" className={compactOnMobile} {...buttonCommonProps}>
           {label ??
             (purchase
@@ -176,7 +176,7 @@ export const CtaButton = React.forwardRef<HTMLAnchorElement, Props>(
             ) : null}
           </>
         ) : null}
-      </div>
+      </>
     );
   },
 );
