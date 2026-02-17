@@ -522,7 +522,7 @@ describe "Sales page", type: :system, js: true do
             expect(page).to_not have_button("Show more")
             within_section "Post 10" do
               expect(page).to have_link("Post 10", href: post.full_url)
-              expect(page).to have_text("Originally sent on #{post.published_at.strftime("%b %-d")}")
+              expect(page).to have_text("Originally sent on #{post.published_at.in_time_zone(seller.timezone).strftime("%b %-d")}")
               click_on "Send"
               expect(page).to have_button("Sending...", disabled: true)
             end
@@ -541,7 +541,7 @@ describe "Sales page", type: :system, js: true do
           end
           within_section "Emails received", section_element: :section do
             within_section "Post 10" do
-              expect(page).to have_text("Sent #{post.published_at.strftime("%b %-d")}")
+              expect(page).to have_text("Sent #{post.published_at.in_time_zone(seller.timezone).strftime("%b %-d")}")
               click_on "Resend email"
               expect(page).to have_button("Sending...", disabled: true)
             end
@@ -577,8 +577,8 @@ describe "Sales page", type: :system, js: true do
         find(:table_row, { "Name" => "Customer 2" }).click
         within_modal "Membership" do
           within_section "Emails received", section_element: :section do
-            expect(page).to have_section("Receipt", text: "Delivered #{purchase2.created_at.strftime("%b %-d")}")
-            within_section "Receipt", text: "Delivered #{membership_purchase.created_at.strftime("%b %-d")}" do
+            expect(page).to have_section("Receipt", text: "Delivered #{purchase2.created_at.in_time_zone(seller.timezone).strftime("%b %-d")}")
+            within_section "Receipt", text: "Delivered #{membership_purchase.created_at.in_time_zone(seller.timezone).strftime("%b %-d")}" do
               click_on "Resend receipt"
               expect(page).to have_button("Resending receipt...", disabled: true)
             end
@@ -587,7 +587,7 @@ describe "Sales page", type: :system, js: true do
         expect(page).to have_alert(text: "Receipt resent")
 
         expect(SendPurchaseReceiptJob).to have_enqueued_sidekiq_job(membership_purchase.id).on("critical")
-        within_section "Receipt", text: "Delivered #{membership_purchase.created_at.strftime("%b %-d")}" do
+        within_section "Receipt", text: "Delivered #{membership_purchase.created_at.in_time_zone(seller.timezone).strftime("%b %-d")}" do
           expect(page).to have_button("Receipt resent", disabled: true)
         end
       end
