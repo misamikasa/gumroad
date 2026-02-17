@@ -379,7 +379,7 @@ describe "Sales page", type: :system, js: true do
 
         row = find(:table_row, { "Email" => "tz@example.com" })
         within row do
-          expect(page).to have_text("Jan 16")
+          expect(page).to have_text("Jan 16, 2025, 5:00 AM")
         end
       end
 
