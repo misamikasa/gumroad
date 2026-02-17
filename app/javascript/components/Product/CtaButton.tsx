@@ -81,7 +81,7 @@ export const CtaButton = React.forwardRef<HTMLAnchorElement, Props>(
   ({ product, purchase, discountCode, selection, label, onClick, showInstallmentPlanNotes = false }, ref) => {
     const hasInstallments =
       product.installment_plan != null && product.installment_plan.number_of_installments > 1;
-    const compactOnMobile = hasInstallments ? "max-lg:text-sm max-lg:px-2 max-lg:py-2" : undefined;
+    const compactOnMobile = hasInstallments ? "max-lg:text-sm max-lg:px-2 max-lg:py-3" : undefined;
     const { searchParams } = new URL(useOriginalLocation());
 
     const [referrer, setReferrer] = React.useState("");
