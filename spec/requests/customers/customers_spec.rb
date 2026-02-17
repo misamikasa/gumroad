@@ -366,6 +366,45 @@ describe "Sales page", type: :system, js: true do
         end
       end
     end
+
+    describe "timezone display" do
+      it "displays purchase dates in the seller's timezone" do
+        seller.update!(timezone: "Tokyo")
+        create(:purchase, link: product1, full_name: "TZ Customer", email: "tz@example.com",
+               created_at: Time.utc(2025, 1, 15, 20, 0, 0), seller:)
+        index_model_records(Purchase)
+
+        login_as seller
+        visit customers_path(query: "tz@example.com")
+
+        row = find(:table_row, { "Email" => "tz@example.com" })
+        within row do
+          expect(page).to have_text("Jan 16")
+        end
+      end
+
+      it "displays charge dates in the seller's timezone" do
+        seller.update!(timezone: "Tokyo")
+        purchase2.update!(
+          purchase_state: "in_progress",
+          created_at: Time.utc(2024, 3, 31, 20, 0, 0),
+          chargeable: create(:chargeable)
+        )
+        purchase2.process!
+        purchase2.mark_successful!
+        purchase2.subscription.update!(charge_occurrence_count: 2, deactivated_at: Time.current)
+
+        login_as seller
+        visit customers_path
+        find(:table_row, { "Name" => "Customer 2" }).click
+
+        within_modal "Membership" do
+          within_section "Charges", section_element: :section do
+            expect(page).to have_text("on 4/1/2024")
+          end
+        end
+      end
+    end
   end
 
   describe "drawer" do
