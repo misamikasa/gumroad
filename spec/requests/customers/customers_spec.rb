@@ -371,7 +371,7 @@ describe "Sales page", type: :system, js: true do
       it "displays purchase dates in the seller's timezone" do
         seller.update!(timezone: "Tokyo")
         create(:purchase, link: product1, full_name: "TZ Customer", email: "tz@example.com",
-               created_at: Time.utc(2025, 1, 15, 20, 0, 0), seller:)
+                          created_at: Time.utc(2025, 1, 15, 20, 0, 0), seller:)
         index_model_records(Purchase)
 
         login_as seller
