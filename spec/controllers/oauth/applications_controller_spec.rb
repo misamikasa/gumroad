@@ -95,6 +95,7 @@ describe Oauth::ApplicationsController, type: :controller, inertia: true do
         application = OauthApplication.last
         expect(application.file.attached?).to be(true)
         expect(response).to redirect_to(edit_oauth_application_path(application.external_id))
+      end
     end
 
     describe "bad create params" do
